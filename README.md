@@ -26,7 +26,28 @@ $$
 S_{t+1} =  \sum_{l=1}^F \beta_l F_{t,l}
 $$
 
-where the vectors $F_{t,l} \in \mathbb{R}^N$ are the factors produced by financial experts and $\beta_l,...,\beta_F \in \mathbb{R}$ are the model parameters that can be fit to a training dataset.
+where the vectors $F_{t,l} \in \mathbb{R}^N$ are the factors produced by financial experts and $\beta_l,...,\beta_F \in \mathbb{R}$ are the model parameters, is fit to a training dataset.
+
+The exact form of these factors is not known due to the assumption of linear factor models. That is, they are assumed to be unmeasurable. In the finance world, examples of factors used by investors are the 5-day normalised mean returns $R_{t}^{(5)}$ and the Momentum $M_t := \frac{1}{\sqrt{m}} \sum_{k=1}^m R_{t+1-k}$. It is thought that a combination of these factors, along with other features, can be used to predict the returns of stocks. If we don't have any idea about finance then we can instead make assumptions about the form of the factors.
+
+We will start by assuming that the features are linear combinations of the past returns of the stocks. That is, we will assume that the factors are of the form:
+
+$$
+F_{t,l} = \sum_{k=1}^D A_{k,l} R_{t+i-k}
+$$
+
+for some basis vectors $A_l := (A_{kl}) \in \mathbb{R}^{D}$ and a fixed time depth $D$ days. Very much like an eigen-decomposition problem or a multidimensional fourier decomposition, we will hold that the basis vectors are orthonormal. That is, $\langle A_l, A_k \rangle = \delta_{lk}  \forall l,k$. This is nice since we can now use physics intuition to understand the problem better.
 
 
+### Physics intuition
+It is common for problems in physics to involve finding the basis functions of a given function, an example being [Fourier decomposition](https://en.wikipedia.org/wiki/Fourier_decomposition). This takes a periodic function and decomposes it into a sum of sine and cosine functions.
+A reminder of an example of this is approcimating the sawtooth function:
 
+$$
+s(x) = \frac{x}{\pi}, \; \text{for} \; -\pi < x < \pi,
+$$
+$$
+s(x + 2\pi k) = s(x) \; \text{for} -\pi < x < \pi \; \text{and} \; k \in \mathbb{Z} 
+
+$$
+This summation can be written as  This is a very useful tool in physics and is used to solve many problems. In the same way, we can use the basis vectors $A_l$ to decompose the factors $F_{t,l}$ into a sum of simpler functions. This is a very useful tool in finance and is used to solve many problems.
