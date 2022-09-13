@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this I will be investigatin the [Qube Research 2022 Data Challenge](https://challengedata.ens.fr/participants/challenges/72/).
+In this I will be investigating the [Qube Research 2022 Data Challenge](https://challengedata.ens.fr/participants/challenges/72/).
 
 First, it is of great importance to me to describe this problem for technical and non-technical people alike. I will first attempt to explain this problem in a way that is accessible to all and then, for the mathematically inclined, I will provide a more rigorous description of the problem.
 
