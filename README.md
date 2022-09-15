@@ -40,14 +40,15 @@ for some basis vectors $A_l := (A_{kl}) \in \mathbb{R}^{D}$ and a fixed time dep
 
 
 ### Physics intuition
-It is common for problems in physics to involve finding the basis functions of a given function, an example being [Fourier decomposition](https://en.wikipedia.org/wiki/Fourier_decomposition). This takes a periodic function and decomposes it into a sum of sine and cosine functions.
-A reminder of an example of this is approcimating the sawtooth function:
+It is common in physics to view a problem in terms of a linear combination of basis vectors. Examples of this are the fourier decomposition of a signal, the eigen-decomposition of a matrix, and the spherical harmonics. In each of these cases, the basis vectors are orthonormal and the coefficients are the parameters of the problem. In the case of the fourier decomposition, the coefficients are the amplitudes of the sinusoids. In the case of the eigen-decomposition, the coefficients are the eigenvalues. In the case of the spherical harmonics, the coefficients are composed of the Legendre polynomials. The idea of decomposing a problem into a set of basis functions is made more powerful by enforcing an orthoginality condition. Orthonormal basis functions are normalised and orthogonal to each other. The very simplest set of orthonormal basis functions are the unit vectors $\mathbf{e}_l \in \mathbb{R}^N$, explicitly:
+$$
+\mathbf{e}_1 = (1,0,...,0), \mathbf{e}_2 = (0,1,...,0), ..., \mathbf{e}_N = (0,0,...,1).
+$$
+
+Each of these basis vectors is orthogonal to all of the others and has a norm of 1. This means that we can use these basis vectors to represent any vector in $\mathbb{R}^N$ as a linear combination of the basis vectors. For example, the vector $\mathbf{v} = (1,2,3,4,5)$ can be represented as a linear combination of the basis vectors as follows:
 
 $$
-s(x) = \frac{x}{\pi}, \; \text{for} \; -\pi < x < \pi,
+\mathbf{v} = \mathbf{e}_1 + 2\mathbf{e}_2 + 3\mathbf{e}_3 + 4\mathbf{e}_4 + 5\mathbf{e}_5
 $$
-$$
-s(x + 2\pi k) = s(x) \; \text{for} -\pi < x < \pi \; \text{and} \; k \in \mathbb{Z} 
 
-$$
-This summation can be written as  This is a very useful tool in physics and is used to solve many problems. In the same way, we can use the basis vectors $A_l$ to decompose the factors $F_{t,l}$ into a sum of simpler functions. This is a very useful tool in finance and is used to solve many problems.
+All simple stuff so far. The power of this intuition is to map the linear factor model idea to that of something we already have a good intuition for. In the case of the linear factor model, we are trying to design a set of orthonormal basis vectors $A_{k,l} \in \mathbb{R}^D$ that can be used with the returns $R_{t} \in \mathbb{R}^N$ to predict the returns $S_{t+1} \in \mathbb{R}^N$. We find $\beta_l$ by minimising the mean squared error between the predicted returns $S_{t+1}$ and the actual returns $\mathbb{R}_{t+1}$. Ok, we'll look at the example notebook to get an idea of how to implement this in practice ad then we'll come back to the explaination.
