@@ -58,11 +58,11 @@ def oldmetric_train(A, beta, X_train_reshape, Y_train):
     Args:
         A (nd.array): D x F Stiefel manifold of orthonormal D vectors of length F
         beta (nd.array): Model parameters
-        X_train_reshape (_type_): Training data
-        Y_train (_type_): Training targets
+        X_train_reshape (np.array): Training data
+        Y_train (np.array): Training targets
 
     Returns:
-        _type_: _description_
+        meanOverlap (float): The mean overlap between the predicted targets and the actual targets
     """
     if not oldcheckOrthonormality(A):
         return -1.0    
@@ -78,12 +78,14 @@ def oldmetric_train(A, beta, X_train_reshape, Y_train):
     return  meanOverlap
 
 
-def oldcalculateGradient(A, beta, h=0.000001):
+def oldcalculateGradient(A, beta, X_train_reshape, Y_train, h=0.000001):
     """ Calculate the gradient of the training error of the linear factor model with respect to the orthonormal matrix A
 
     Args:
         A (np.array): D x F Stiefel manifold of orthonormal D vectors of length F
         beta (nd.array): Model parameters
+        X_train_reshape (np.array): Training data
+        Y_train (np.array): Training targets
         h (float, optional): Gradient step. Defaults to 0.000001.
 
     Returns:
@@ -94,8 +96,8 @@ def oldcalculateGradient(A, beta, h=0.000001):
     for i in range(A.shape[0]): 
         for j in range(A.shape[1]): ## Loop over all elements of A
             C[i, j] += h # increment a single element of A by h
-            C_beta = oldfitBeta(C) # fit the model to the new A
-            G[i, j] = (oldmetric_train(C, C_beta) - oldmetric_train(A, beta))/h # calculate the gradient of the training error with respect to the element of A
+            C_beta = oldfitBeta(C, X_train_reshape, Y_train) # fit the model to the new A
+            G[i, j] = (oldmetric_train(C, C_beta, X_train_reshape=X_train_reshape, Y_train=Y_train) - oldmetric_train(A, beta, X_train_reshape=X_train_reshape, Y_train=Y_train))/h # calculate the gradient of the training error with respect to the element of A
             C[i, j] -= h # reset the element of A to its original value
     return G # return the gradient matrix
 
@@ -111,7 +113,7 @@ def oldSkewSymmetric(G, A):
     """
     return G@A.T - A@G.T
 
-def oldCalculateQ(X, alpha):
+def oldCalculateQ(X, alpha=1):
     """ Calculate the Cayley transform of a matrix X, with step size alpha.
 
     Args:
