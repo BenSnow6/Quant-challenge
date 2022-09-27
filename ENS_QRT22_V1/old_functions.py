@@ -72,10 +72,10 @@ def oldmetric_train(A, beta, X_train_reshape, Y_train):
     
     Ytrue = Ytrue.div(np.sqrt((Ytrue**2).sum()), 1)    ## Actual returns normalized by the sum of the squares of the returns
     Ypred = Ypred.div(np.sqrt((Ypred**2).sum()), 1)
-
+    
     meanOverlap = (Ytrue * Ypred).sum().mean()        ## Mean of the dot product of the normalized returns
 
-    return  meanOverlap
+    return  1/meanOverlap
 
 
 def oldcalculateGradient(A, beta, X_train_reshape, Y_train, h=0.000001):
